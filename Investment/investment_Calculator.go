@@ -5,10 +5,11 @@ import (
 	"math"
 )
 
+const inflationRate = 3.5
+
 func main() {
 
-	const inflationRate = 3.5
-	var investmentAmount float64
+ 	var investmentAmount float64
 	var returnRate float64
 	years := 10.0
 
@@ -18,11 +19,11 @@ func main() {
 	outputStatment("returnRate: ")
 	fmt.Scan(&returnRate)
 
-	futureValue := float64(investmentAmount) * math.Pow(1+returnRate/100, years)
-	futureReturnValue := futureValue / math.Pow(1+inflationRate/100, years)
+	Fv:=futureValues(investmentAmount,returnRate,years)
+	futureReturnValue := Fv / math.Pow(1+inflationRate/100, years)
 
-	fv := fmt.Sprintf("future value is %.f\n", futureValue)
-	frv := fmt.Sprintf("future return value is %.2f", futureReturnValue)
+	fv := fmt.Sprintf("future value is %.f\n",Fv)
+	frv := fmt.Sprintf("future return value is %.2f",futureReturnValue)
 
 	fmt.Println(fv, frv)
 
@@ -34,5 +35,11 @@ func main() {
 }
 
 func outputStatment(text string) {
-	fmt.Println(text)
+	fmt.Print(text)
+}
+
+func futureValues(investmentAmount, returnRate, years float64)  float64{
+	
+	futureValue := float64(investmentAmount) * math.Pow(1+returnRate/100, years)
+	return futureValue
 }

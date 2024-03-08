@@ -7,22 +7,36 @@ func main() {
 	var expenses float64
 	var taxRate float64
 
-	fmt.Print("revenue: ")
+	textOuput("revenue:")
 	fmt.Scan(&revenue)
 
-	fmt.Print("expense: ")
+	textOuput("expenses:")
 	fmt.Scan(&expenses)
 
-	fmt.Print("taxRate: ")
+	textOuput("taxRate: ")
 	fmt.Scan(&taxRate)
 
-	ebt := (revenue - expenses) * (1 - taxRate)
-	incomeTaxExpense := ebt * taxRate
-	eat := ebt - incomeTaxExpense
-	ratio := ebt / eat
+	// ebt := (revenue - expenses) * (1 - taxRate)
+	// incomeTaxExpense := ebt * taxRate
+	// eat := ebt - incomeTaxExpense
+	// ratio := ebt / eat
+	Ebt,IncomeTaxExpense,Eat,Ratio:=calculation(revenue,expenses,taxRate)
 
-	fmt.Println(ebt)
-	fmt.Println(incomeTaxExpense)
-	fmt.Println(eat)
-	fmt.Println(ratio)
+	fmt.Println(Ebt)
+	fmt.Println(IncomeTaxExpense)
+	fmt.Println(Eat)
+	fmt.Println(Ratio)
+}
+
+func textOuput(text string) string {
+	fmt.Print(text)
+	return text
+}
+
+func calculation(revenue,expenses, taxRate float64) (ebt,incomeTaxExpense,eat,ratio float64){
+	ebt = (revenue - expenses) * (1 - taxRate)
+	incomeTaxExpense = ebt * taxRate
+	eat = ebt - incomeTaxExpense
+	ratio = ebt / eat
+    return ebt,incomeTaxExpense,eat,ratio
 }
