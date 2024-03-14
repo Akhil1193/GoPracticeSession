@@ -1,6 +1,12 @@
 package main
 
 import "fmt"
+import "os"
+
+func writeBalanceToFile(balance float64){
+	balanceText:=fmt.Sprint(balance)
+	os.WriteFile("balance.txt", []byte(balanceText), 0644 )
+}
 
 func main() {
 	accoutBalance := 1000.0
@@ -31,6 +37,7 @@ func main() {
 			}
 			accoutBalance += addAmount
 			fmt.Println("Your total balance is:", accoutBalance)
+			writeBalanceToFile(accoutBalance)
 		case 3:
 			fmt.Println("Withdraw Amount:")
 			var WithdrawAmount float64
@@ -44,6 +51,7 @@ func main() {
 				continue
 			}
 			accoutBalance -= WithdrawAmount
+			writeBalanceToFile(accoutBalance)
 
 			fmt.Println("Your total balance is:", accoutBalance)
 		default:
