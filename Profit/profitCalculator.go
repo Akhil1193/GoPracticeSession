@@ -26,3 +26,5 @@ func main() {
 	fmt.Println(eat)
 	fmt.Println(ratio)
 }
+
+
