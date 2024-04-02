@@ -1,36 +1,15 @@
 package main
 
 import (
-	"errors"
+	"GoPracticeSession/controlStructures/fileops"
+	"github.com/Pallinder/go-randomdata"
 	"fmt"
-	"os"
-	"strconv"
 )
 
-const fileName = "balance.txt"
-
-func readBalanceFromFile() (float64, error) {
-	data, err := os.ReadFile(fileName)
-
-	if err != nil {
-		return 1000, errors.New("failed to read file")
-	}
-	balanceText := string(data)
-	balance, err := strconv.ParseFloat(balanceText, 64)
-
-	if err != nil {
-		return 1000, errors.New("failed to parse value")
-	}
-	return balance, nil
-}
-
-func writeBalanceToFile(balance float64) {
-	balanceText := fmt.Sprint(balance)
-	os.WriteFile(fileName, []byte(balanceText), 0644)
-}
+const accountBalanceFile = "balance.txt"
 
 func main() {
-	accoutBalance, err := readBalanceFromFile()
+	accoutBalance, err := fileops.GetFloatFromFile(accountBalanceFile)
 
 	if err != nil {
 		fmt.Println("ERROR")
@@ -39,14 +18,12 @@ func main() {
 	}
 
 	fmt.Println("Welcome to HDFC Bank!")
+	fmt.Println("Email us your concerns at",randomdata.Email())
+	fmt.Println("Reach us 24/7 at",randomdata.PhoneNumber())
+	fmt.Println(randomdata.Address())
 
 	for {
-		fmt.Println("Welcome to Go Bank!")
-		fmt.Println("What do you want to do?")
-		fmt.Println("1.Check Balance")
-		fmt.Println("2.Deposit Amount")
-		fmt.Println("3.Withdraw Amount")
-		fmt.Println("4. Exit")
+		fileops.PrintOptions()
 
 		var Choice int
 
@@ -66,7 +43,7 @@ func main() {
 			}
 			accoutBalance += addAmount
 			fmt.Println("Your total balance is:", accoutBalance)
-			writeBalanceToFile(accoutBalance)
+			fileops.WriteFloatToFile(accoutBalance, accountBalanceFile)
 		case 3:
 			fmt.Println("Withdraw Amount:")
 			var WithdrawAmount float64
@@ -80,7 +57,7 @@ func main() {
 				continue
 			}
 			accoutBalance -= WithdrawAmount
-			writeBalanceToFile(accoutBalance)
+			fileops.WriteFloatToFile(accoutBalance, accountBalanceFile)
 
 			fmt.Println("Your total balance is:", accoutBalance)
 		default:
@@ -90,38 +67,6 @@ func main() {
 
 			//break
 		}
-
-		// 	// if Choice == 1 {
-		// 	// 	fmt.Println("Your account balance is:", accoutBalance)
-		// 	// } else if Choice == 2 {
-		// 	// 	fmt.Println("Your Deposit Amount:")
-		// 	// 	var addAmount float64
-		// 	// 	fmt.Scan(&addAmount)
-		// 	// 	if addAmount <= 0 {
-		// 	// 		fmt.Println("Invalid Amount! Amount should be greater than Zero")
-		// 	// 		continue
-		// 	// 	}
-		// 	// 	accoutBalance += addAmount
-		// 	// 	fmt.Println("Your total balance is:", accoutBalance)
-		// 	// } else if Choice == 3 {
-		// 	// 	fmt.Println("Withdraw Amount:")
-		// 	// 	var WithdrawAmount float64
-		// 	// 	fmt.Scan(&WithdrawAmount)
-		// 	// 	if WithdrawAmount <= 0 {
-		// 	// 		fmt.Println("Invalid Amount! Amount should be greater than Zero")
-		// 	// 		continue
-		// 	// 	}
-		// 	// 	if WithdrawAmount > accoutBalance {
-		// 	// 		fmt.Println("Insufficient Amount in your Account!")
-		// 	// 		continue
-		// 	// 	}
-		// 	// 	accoutBalance -= WithdrawAmount
-		// 	// 	fmt.Println("Your total balance is:", accoutBalance)
-		// 	// } else {
-		// 	// 	fmt.Println("Good Bye!")
-		// 	// 	//return
-		// 	// 	break
-		// 	}
 
 	}
 }
